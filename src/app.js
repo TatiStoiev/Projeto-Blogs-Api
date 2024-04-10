@@ -1,6 +1,6 @@
 const express = require('express');
 const { userController } = require('./controller/index');
-const { loginMiddleware } = require('./middlewares/login.middleware');
+const { loginMiddleware } = require('./middlewares/validateUser.middleware');
 
 // ...
 

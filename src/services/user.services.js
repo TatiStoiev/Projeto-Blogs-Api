@@ -1,9 +1,15 @@
 const UserModel = require('../models/User');
+const auth = require('../utils/auth');
 
 const login = async (email, password) => {
-  const { status, data } = await UserModel.findOne({ 
+  const user = await UserModel.findOne({ 
     where: { email, password } });
-    if (!user)
+  if (!user) {
+    return { status: 'INVALID_VALUE', data: { message: 'Invalid fields' } };
+  }
+
+  const token = await auth.createToken(user.id);
+  return token; 
 };
 
 module.exports = {
