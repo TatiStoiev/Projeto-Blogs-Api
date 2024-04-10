@@ -9,14 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
+        primaryKey:true,
       },
       title: {
         type: Sequelize.STRING(255), 
-        allowNull: false,
       },
       content: {
         type: Sequelize.STRING(255),
-        allowNull: false,
       },
       user_id: {
         type: Sequelize.INTEGER,
