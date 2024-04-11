@@ -7,9 +7,6 @@ const login = async (email, password) => {
   if (!user) {
     return { status: 'INVALID_VALUE', data: { message: 'Invalid fields' } };
   }
-
-  const token = await auth.createToken(user.id);
-  return token; 
 };
 
 module.exports = {
