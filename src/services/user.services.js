@@ -1,5 +1,4 @@
-const UserModel = require('../models/User');
-const auth = require('../utils/auth');
+const { UserModel } = require('../models');
 
 const login = async (email, password) => {
   const user = await UserModel.findOne({ 
@@ -7,6 +6,7 @@ const login = async (email, password) => {
   if (!user) {
     return { status: 'INVALID_VALUE', data: { message: 'Invalid fields' } };
   }
+  return { status: 'SUCCESSFUL', data: { user } };
 };
 
 module.exports = {

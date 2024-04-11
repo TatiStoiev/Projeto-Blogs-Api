@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { mapStatusHttp } = require('../utils/auth');
 
 const secret = process.env.JWT_SECRET;
 
@@ -10,7 +11,8 @@ module.exports = async (req, res, next) => {
   const bearerToken = req.header('Authorization');
 
   if (!bearerToken) {
-    return res.status(401).json({ error: 'Token not found' });
+    const status = 'NOT_FOUND';
+    return res.status(mapStatusHttp(status)).json({ message: 'Token not found' });
   }
 
   const token = extractToken(bearerToken);
@@ -21,6 +23,7 @@ module.exports = async (req, res, next) => {
       next();
     }
   } catch (error) {
-    return res.status(401).json({ message: 'Token not found' });
+    const status = 'EXPIRED_OR_INVALID';
+    return res.status(mapStatusHttp(status)).json({ message: 'Expired or invalid token' });
   }  
 };
