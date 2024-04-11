@@ -1,7 +1,10 @@
-const { UserModel } = require('../models');
+const { User } = require('../models');
 
 const login = async (email, password) => {
-  const user = await UserModel.findOne({ 
+  console.log('email no service', email);
+  console.log('password no service', password);
+  
+  const user = await User.findOne({ 
     where: { email, password } });
   if (!user) {
     return { status: 'INVALID_VALUE', data: { message: 'Invalid fields' } };
