@@ -1,14 +1,5 @@
 const { User } = require('../models');
 
-const login = async (email, password) => {  
-  const user = await User.findOne({ 
-    where: { email, password } });
-  if (!user) {
-    return { status: 'INVALID_VALUE', data: { message: 'Invalid fields' } };
-  }
-  return { status: 'SUCCESSFUL', data: { user } };
-};
-
 const emailAlreadyExists = async (email) => {
   const result = await User.findOne({ 
     where: { email } });
@@ -30,9 +21,25 @@ const findAll = async () => {
   return users;
 };
 
+const findById = async (id) => {
+  const user = await User.findOne({
+    where: { id } });
+
+  if (!user) {
+    return { status: 'USER_INVALID', data: { message: 'User does not exist' } };
+  }
+
+  return {
+    id: user.id,
+    displayName: user.displayName,
+    email: user.email,
+    image: user.image,
+  };
+};
+
 module.exports = {
-  login,
   emailAlreadyExists,
   addUser,
   findAll,
+  findById,
 };

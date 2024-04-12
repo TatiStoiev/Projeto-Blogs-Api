@@ -1,4 +1,4 @@
-const { mapStatusHttp } = require('../utils/auth');
+const { mapStatusHttp } = require('../utils/mapStatusHttp');
 
 const validateNewUser = (req, res, next) => {
   const { displayName, email, password } = req.body;
