@@ -24,12 +24,14 @@ module.exports = (Sequelize, DataTypes) => {
           },
           updated: {
             type: DataTypes.DATE,
-          },
-          tableName: 'categories', 
+          }
+          },{ 
+          tableName: 'blog_posts', 
           timestamps: false, 
           underscored: true,
+          }
+    );
 
-    })
     BlogPost.associate = (models) => {
         BlogPost.belongsTo(models.User, {
             foreignKey: 'userId', 
