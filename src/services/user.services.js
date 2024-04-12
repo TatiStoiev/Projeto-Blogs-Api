@@ -17,15 +17,22 @@ const emailAlreadyExists = async (email) => {
 
 const addUser = async (profile) => {  
   const userCreated = await User.create(profile);
-  console.log(userCreated);
   return {
     id: userCreated.id,
     ...userCreated,
   };
 };
 
+const findAll = async () => {
+  const users = await User.findAll({
+    attributes: { exclude: ['password'] },
+  });  
+  return users;
+};
+
 module.exports = {
   login,
   emailAlreadyExists,
   addUser,
+  findAll,
 };

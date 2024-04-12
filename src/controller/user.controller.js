@@ -48,7 +48,13 @@ const addUser = async (req, res) => {
   return res.status(mapStatusHttp(status)).json({ token });
 };
 
+const getAll = async (req, res) => {
+  const users = await userServices.findAll();
+  return res.status(200).json(users);
+};
+
 module.exports = {
   login,
   addUser,
+  getAll,
 };
