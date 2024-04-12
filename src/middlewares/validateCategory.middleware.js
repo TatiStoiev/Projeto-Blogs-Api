@@ -5,7 +5,7 @@ const validateNameCategory = (req, res, next) => {
     
   const status = 'INVALID_VALUE';
 
-  if (name.length === 0) {
+  if (!name || name === '') {
     return res.status(mapStatusHttp(status))
       .json({ message: '"name" is required' });
   }
