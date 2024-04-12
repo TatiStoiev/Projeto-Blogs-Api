@@ -4,6 +4,8 @@ const httpErrorMap = {
   INVALID_VALUE: 400,
   NOT_FOUND: 401,
   EXPIRED_OR_INVALID: 401,
+  USER_REGISTERED: 409,
+  REGISTERED: 201,
 };
 
 const mapStatusHttp = (status) => httpErrorMap[status] || 500;

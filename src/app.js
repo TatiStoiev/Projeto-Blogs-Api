@@ -1,6 +1,7 @@
 const express = require('express');
 const { userController } = require('./controller/index');
 const { loginMiddleware } = require('./middlewares/validateUser.middleware');
+const { validateNewUser } = require('./middlewares/validateNewUser.middleware');
 
 // ...
 
@@ -14,6 +15,7 @@ app.get('/', (_request, response) => {
 app.use(express.json());
 
 app.post('/login', loginMiddleware, userController.login);
+app.post('/user', validateNewUser, userController.addUser);
 
 // ...
 
