@@ -1,4 +1,4 @@
-const validateBlogPost = (req, res, next) => {
+const validatePost = (req, res, next) => {
   const { title, content, categoryIds } = req.body;
 
   if (title === '') {
@@ -17,5 +17,5 @@ const validateBlogPost = (req, res, next) => {
 };
 
 module.exports = {
-  validateBlogPost,
+  validatePost,
 };
