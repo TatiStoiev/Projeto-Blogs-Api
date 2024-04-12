@@ -1,4 +1,4 @@
-const { Category } = require('../models');
+const { Category, BlogPost, PostCategory } = require('../models');
 
 const verifyCategoryId = async (categoryIds) => {
   if (Array.isArray(categoryIds)) {
@@ -17,6 +17,29 @@ const verifyCategoryId = async (categoryIds) => {
   }
 };
 
+//buscar o id do usuario pelo token ou pelo create 
+//inserir um valor default para a data atual do updated e published
+const createPost = async (post) => {
+  const { title, content, categoryIds } = post;
+
+  const response = await BlogPost.create({ title, content });
+  await Promise.all(
+    categoryIds.map((categoryId) => 
+      PostCategory.create({ postId: response.id, categoryId })),
+  );
+  const createdPost = {
+    id: response.dataValues.id,
+    title: response.dataValues.title,
+    content: response.dataValues.content,
+    userId: response.dataValues.userId,
+    updated: response.dataValues.updated,
+    published: response.dataValues.published,
+  }
+  console.log('createdpost no service', createdPost)
+  return createdPost;
+};
+
 module.exports = {
   verifyCategoryId,
+  createPost,
 };

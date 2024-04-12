@@ -3,13 +3,13 @@ const { mapStatusHttp } = require('../utils/mapStatusHttp');
 
 const addPost = async (req, res) => {
   const { categoryIds } = req.body;
-  console.log('categoryIds na controller', categoryIds)
 
   const categories = await postServices.verifyCategoryId(categoryIds);
-  console.log('categories no controller', categories)
   
   if (categories === null) {
-    return res.status(201).send();
+    const createdPost = await postServices.createPost(req.body);
+    console.log('createdpost no controller', createdPost)
+    return res.status(201).json({ createdPost });
   }
   if (categories.status === 'INVALID_VALUE') {
     const status = 'INVALID_VALUE';

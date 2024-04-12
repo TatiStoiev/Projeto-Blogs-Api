@@ -8,9 +8,11 @@ module.exports = (Sequelize, DataTypes) => {
           },
           title: {
             type: DataTypes.STRING(255), 
+            allowNull: false,
           },
           content: {
             type: DataTypes.STRING(255),
+            allowNull: false,
           },
           userId: {
             type: DataTypes.INTEGER,
@@ -21,6 +23,7 @@ module.exports = (Sequelize, DataTypes) => {
           },
           published: {
             type: DataTypes.DATE,
+            defaultValue: 
           },
           updated: {
             type: DataTypes.DATE,
