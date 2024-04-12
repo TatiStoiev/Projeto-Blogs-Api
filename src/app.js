@@ -23,6 +23,7 @@ app.get('/user', ValidateToken, userController.getAll);
 app.get('/user/:id', ValidateToken, userController.getById);
 
 app.post('/categories', ValidateToken, validateNameCategory, categoryController.addCategory);
+app.get('/categories', ValidateToken, categoryController.getAll);
 
 // ...
 
