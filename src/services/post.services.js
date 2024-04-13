@@ -17,12 +17,10 @@ const verifyCategoryId = async (categoryIds) => {
   }
 };
 
-//buscar o id do usuario pelo token ou pelo create 
-//inserir um valor default para a data atual do updated e published
 const createPost = async (post) => {
-  const { title, content, categoryIds } = post;
+  const { title, content, categoryIds, UserId } = post;
 
-  const response = await BlogPost.create({ title, content });
+  const response = await BlogPost.create({ title, content, UserId });
   await Promise.all(
     categoryIds.map((categoryId) => 
       PostCategory.create({ postId: response.id, categoryId })),
@@ -31,11 +29,11 @@ const createPost = async (post) => {
     id: response.dataValues.id,
     title: response.dataValues.title,
     content: response.dataValues.content,
-    userId: response.dataValues.userId,
+    UserId,
     updated: response.dataValues.updated,
     published: response.dataValues.published,
-  }
-  console.log('createdpost no service', createdPost)
+  };
+  
   return createdPost;
 };
 
