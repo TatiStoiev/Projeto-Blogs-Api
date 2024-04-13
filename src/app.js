@@ -27,6 +27,7 @@ app.post('/categories', ValidateToken, validateNameCategory, categoryController.
 app.get('/categories', ValidateToken, categoryController.getAll);
 
 app.post('/post', ValidateToken, validatePost, blogPostController.addPost);
+app.get('/post', ValidateToken, blogPostController.getAll);
 // ...
 
 // É importante exportar a constante `app`,

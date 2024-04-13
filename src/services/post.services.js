@@ -1,4 +1,4 @@
-const { Category, BlogPost, PostCategory } = require('../models');
+const { Category, BlogPost, User, PostCategory } = require('../models');
 
 const verifyCategoryId = async (categoryIds) => {
   if (Array.isArray(categoryIds)) {
@@ -25,9 +25,7 @@ const createPost = async (post) => {
     categoryIds.map((categoryId) => 
       PostCategory.create({ postId: response.id, categoryId })),
   );
-
   console.log('response do cadastro do token', response);
-
   const createdPost = {
     id: response.dataValues.id,
     title: response.dataValues.title,
@@ -42,7 +40,20 @@ const createPost = async (post) => {
   return createdPost;
 };
 
-module.exports = {
-  verifyCategoryId,
-  createPost,
+const findAll = async () => {
+  const allPosts = await BlogPost.findAll({
+    include: [ 
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      }, {
+        model: Category,
+        as: 'categories' },
+    ],
+  });
+  return allPosts;
 };
+
+module.exports = {
+  verifyCategoryId, createPost, findAll };
