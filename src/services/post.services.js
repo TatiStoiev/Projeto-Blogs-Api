@@ -21,6 +21,7 @@ const createPost = async (post) => {
   const { title, content, categoryIds, userId } = post;
 
   const response = await BlogPost.create({ title, content, userId });
+  console.log('response.id', response.id);
   await Promise.all(
     categoryIds.map((categoryId) => 
       PostCategory.create({ postId: response.id, categoryId })),
