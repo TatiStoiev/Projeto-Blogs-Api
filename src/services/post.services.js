@@ -29,7 +29,7 @@ const createPost = async (post) => {
     id: response.dataValues.id,
     title: response.dataValues.title,
     content: response.dataValues.content,
-    UserId,
+    userId: UserId,
     updated: response.dataValues.updated,
     published: response.dataValues.published,
   };
