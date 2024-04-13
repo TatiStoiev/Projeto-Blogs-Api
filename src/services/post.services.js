@@ -1,22 +1,5 @@
 const { Category, BlogPost, User, PostCategory } = require('../models');
 
-const verifyCategoryId = async (categoryIds) => {
-  if (Array.isArray(categoryIds)) {
-    const AllCategories = await Category.findAll();
-
-    const existingIds = AllCategories.map((category) => category.id);
-
-    const notFoundIds = categoryIds.filter((id) => !existingIds.includes(id));
-
-    if (notFoundIds.length === 0) {
-      return null;
-    }
-    if (notFoundIds.length >= 1) {
-      return { status: 'INVALID_VALUE', data: { message: 'one or more "categoryIds" not found' } };
-    }
-  }
-};
-
 const createPost = async (post) => {
   const { title, content, categoryIds, userId } = post;
 
@@ -36,8 +19,7 @@ const createPost = async (post) => {
     published: response.dataValues.published,
   };
 
-  console.log('a createdpost do service', createdPost);
-  
+  console.log('a createdpost do service', createdPost);  
   return createdPost;
 };
 
@@ -56,5 +38,23 @@ const findAll = async () => {
   return allPosts;
 };
 
-module.exports = {
-  verifyCategoryId, createPost, findAll };
+const findById = async (id) => {
+  const post = await BlogPost.findOne({
+    where: { id },
+    include: [ 
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      }, {
+        model: Category,
+        as: 'categories' },
+    ],
+  });
+  if (!post) {
+    return { status: 'USER_INVALID', data: { message: 'Post does not exist' } };
+  }
+  return post;
+};
+
+module.exports = { createPost, findAll, findById };
