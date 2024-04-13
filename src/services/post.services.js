@@ -20,11 +20,14 @@ const verifyCategoryId = async (categoryIds) => {
 const createPost = async (post) => {
   const { title, content, categoryIds, UserId } = post;
 
-  const response = await BlogPost.create({ title, content, UserId });
+  const response = await BlogPost.create({ title, content, userId: UserId });
   await Promise.all(
     categoryIds.map((categoryId) => 
       PostCategory.create({ postId: response.id, categoryId })),
   );
+
+  console.log('response do cadastro do token', response);
+
   const createdPost = {
     id: response.dataValues.id,
     title: response.dataValues.title,
@@ -33,6 +36,8 @@ const createPost = async (post) => {
     updated: response.dataValues.updated,
     published: response.dataValues.published,
   };
+
+  console.log('a createdpost do service', createdPost);
   
   return createdPost;
 };
