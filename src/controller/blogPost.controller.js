@@ -1,7 +1,30 @@
-// const addPost = (req, res) => {
+const { postServices } = require('../services/index');
+const { mapStatusHttp } = require('../utils/mapStatusHttp');
 
-// }; 
+const addPost = async (req, res) => {
+  const { title, content, categoryIds } = req.body;
+  const { UserId } = req.user;
 
-// module.exports = {
-//   addPost,
-// };
+  const categories = await postServices.verifyCategoryId(categoryIds);
+  
+  if (categories === null) {
+    const createdPost = await postServices
+      .createPost({ title, content, categoryIds, userId: UserId });
+    return res.status(201).json({ createdPost });
+  }
+  if (categories.status === 'INVALID_VALUE') {
+    const status = 'INVALID_VALUE';
+    return res.status(mapStatusHttp(status))
+      .json(categories.data);
+  }
+}; 
+
+const getAll = async (req, res) => {
+  const allPosts = await postServices.findAll();
+  return res.status(200).json(allPosts);
+};
+
+module.exports = {
+  addPost,
+  getAll,
+};
