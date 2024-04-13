@@ -18,9 +18,9 @@ const verifyCategoryId = async (categoryIds) => {
 };
 
 const createPost = async (post) => {
-  const { title, content, categoryIds, UserId } = post;
+  const { title, content, categoryIds, userId } = post;
 
-  const response = await BlogPost.create({ title, content, userId: UserId });
+  const response = await BlogPost.create({ title, content, userId });
   await Promise.all(
     categoryIds.map((categoryId) => 
       PostCategory.create({ postId: response.id, categoryId })),
@@ -32,7 +32,7 @@ const createPost = async (post) => {
     id: response.dataValues.id,
     title: response.dataValues.title,
     content: response.dataValues.content,
-    userId: UserId,
+    userId,
     updated: response.dataValues.updated,
     published: response.dataValues.published,
   };
