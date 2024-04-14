@@ -1,4 +1,4 @@
-const { postServices, categoryServices } = require('../services/index');
+const { postServices, categoryServices, updatePostServices } = require('../services/index');
 const { mapStatusHttp } = require('../utils/mapStatusHttp');
 
 const statusUserInvalid = 'USER_INVALID';
@@ -35,8 +35,26 @@ const getById = async (req, res) => {
   return res.status(200).json(post);
 };
 
+const updatePost = async (req, res) => {
+  const userId = req.user.UserId;
+  const id = Number(req.params.id);
+  const { title, content } = req.body;
+
+  const userIdIsTheOwner = await postServices.findById(id);
+  if (userIdIsTheOwner.userId !== userId) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+
+  const updatedPost = await updatePostServices.updatePost(id, title, content); 
+  if (updatedPost.status === 'SUCCESSFUL') {
+    const status = 'SUCCESSFUL';
+    return res.status(mapStatusHttp(status)).json(updatedPost.data);
+  }
+};
+
 module.exports = {
   addPost,
   getAll,
   getById,
+  updatePost,
 };

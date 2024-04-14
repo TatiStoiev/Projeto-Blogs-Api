@@ -6,6 +6,7 @@ const { validateNewUser } = require('./middlewares/validateNewUser.middleware');
 const { ValidateToken } = require('./middlewares/validateToken.middleware');
 const { validateNameCategory } = require('./middlewares/validateCategory.middleware');
 const { validatePost } = require('./middlewares/validatePost.middleware');
+const { validateUpdatePost } = require('./middlewares/validateUpdatePost.middleware');
 // ...
 
 const app = express();
@@ -29,6 +30,7 @@ app.get('/categories', ValidateToken, categoryController.getAll);
 app.post('/post', ValidateToken, validatePost, blogPostController.addPost);
 app.get('/post', ValidateToken, blogPostController.getAll);
 app.get('/post/:id', ValidateToken, blogPostController.getById);
+app.put('/post/:id', ValidateToken, validateUpdatePost, blogPostController.updatePost);
 // ...
 
 // É importante exportar a constante `app`,
