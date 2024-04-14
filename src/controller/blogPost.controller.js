@@ -3,6 +3,7 @@ const { mapStatusHttp } = require('../utils/mapStatusHttp');
 
 const statusUserInvalid = 'USER_INVALID';
 const statusInvalidValue = 'INVALID_VALUE';
+const statusSuccessful = 'SUCCESSFUL';
 
 const addPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
@@ -47,14 +48,8 @@ const updatePost = async (req, res) => {
 
   const updatedPost = await updatePostServices.updatePost(id, title, content); 
   if (updatedPost.status === 'SUCCESSFUL') {
-    const status = 'SUCCESSFUL';
-    return res.status(mapStatusHttp(status)).json(updatedPost.data);
+    return res.status(mapStatusHttp(statusSuccessful)).json(updatedPost.data);
   }
 };
 
-module.exports = {
-  addPost,
-  getAll,
-  getById,
-  updatePost,
-};
+module.exports = { addPost, getAll, getById, updatePost };

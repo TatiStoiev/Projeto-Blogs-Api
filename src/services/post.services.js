@@ -4,12 +4,11 @@ const createPost = async (post) => {
   const { title, content, categoryIds, userId } = post;
 
   const response = await BlogPost.create({ title, content, userId });
-  console.log('response.id', response.id);
   await Promise.all(
     categoryIds.map((categoryId) => 
       PostCategory.create({ postId: response.id, categoryId })),
   );
-  console.log('response do cadastro do token', response);
+
   const createdPost = {
     id: response.dataValues.id,
     title: response.dataValues.title,
@@ -19,7 +18,6 @@ const createPost = async (post) => {
     published: response.dataValues.published,
   };
 
-  console.log('a createdpost do service', createdPost);  
   return createdPost;
 };
 
