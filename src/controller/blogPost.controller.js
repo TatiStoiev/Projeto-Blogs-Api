@@ -39,11 +39,13 @@ const updatePost = async (req, res) => {
   const userId = req.user.UserId;
   const id = Number(req.params.id);
   const { title, content } = req.body;
-  const updatedPost = await updatePostServices.updatePost(title, content, id, userId); 
-  if (updatePost.status === 'NOT_FOUND') {
-    const status = 'NOT_FOUND';
-    return res.status(mapStatusHttp(status)).json(updatedPost.data);
+
+  const userIdIsTheOwner = await postServices.findById(id);
+  if (userIdIsTheOwner.userId !== userId) {
+    return res.status(401).json({ message: 'Unauthorized user' });
   }
+
+  const updatedPost = await updatePostServices.updatePost(id, title, content); 
   if (updatedPost.status === 'SUCCESSFUL') {
     const status = 'SUCCESSFUL';
     return res.status(mapStatusHttp(status)).json(updatedPost.data);
