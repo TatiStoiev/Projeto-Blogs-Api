@@ -12,15 +12,19 @@ const updatePost = async (id, title, content) => {
 };
 
 const deletePost = async (id) => {
-  console.log('id na deletePost da service:', id);
-  await PostCategory.destroy({ where: { postId: id } });
-  const rowsAffected = await BlogPost.destroy(
-    { where: { id } },
-  );
-  if (rowsAffected >= 1) {
+
+  await PostCategory.destroy({ 
+    where: { postId: id },
+  });
+
+  const rowsAffected = await BlogPost.destroy({ 
+    where: { id },
+  });
+
+  if (rowsAffected) {
     return { status: 'SUCCESSFUL', rowsAffected };
   }
-};
+};  
 
 module.exports = {
   updatePost,

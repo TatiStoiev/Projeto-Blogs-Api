@@ -1,7 +1,7 @@
 const { postServices, categoryServices, updatePostServices } = require('../services/index');
 const { mapStatusHttp } = require('../utils/mapStatusHttp');
 
-const statusUserInvalid = 'USER_INVALID';
+const statusInvalid = 'INVALID';
 const statusInvalidValue = 'INVALID_VALUE';
 const statusSuccessful = 'SUCCESSFUL';
 
@@ -30,8 +30,8 @@ const getById = async (req, res) => {
   const id = Number(req.params.id);
 
   const post = await postServices.findById(id);
-  if (post.status === 'USER_INVALID') {
-    return res.status(mapStatusHttp(statusUserInvalid)).json(post.data);
+  if (post.status === 'INVALID') {
+    return res.status(mapStatusHttp(statusInvalid)).json(post.data);
   }
   return res.status(200).json(post);
 };

@@ -50,7 +50,7 @@ const findById = async (id) => {
     ],
   });
   if (!post) {
-    return { status: 'USER_INVALID', data: { message: 'Post does not exist' } };
+    return { status: 'INVALID', data: { message: 'Post does not exist' } };
   }
   return post;
 };
