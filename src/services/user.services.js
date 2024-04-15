@@ -1,4 +1,5 @@
-const { User } = require('../models');
+const { User, BlogPost, PostCategory } = require('../models');
+const { findPosts } = require('../utils/findPosts');
 
 const emailAlreadyExists = async (email) => {
   const result = await User.findOne({ 
@@ -37,9 +38,22 @@ const findById = async (id) => {
   };
 };
 
+const deleteUser = async (userId) => {
+  const postIds = await findPosts(userId);
+
+  await PostCategory.destroy({ where: { postId: postIds } });
+  await BlogPost.destroy({
+    where: { userId } });
+  const rowsAffected = await User.destroy({
+    where: { id: userId },
+  });
+  return rowsAffected;
+};
+
 module.exports = {
   emailAlreadyExists,
   addUser,
   findAll,
   findById,
+  deleteUser,
 };

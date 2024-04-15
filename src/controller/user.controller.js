@@ -44,8 +44,13 @@ const getById = async (req, res) => {
   return res.status(mapStatusHttp(status)).json(user);
 };
 
-module.exports = {
-  addUser,
-  getAll,
-  getById,
+const deleteUser = async (req, res) => {
+  const userId = req.user.UserId; 
+
+  const deletedUser = await userServices.deleteUser(userId);
+  if (deletedUser >= 1) {
+    return res.status(204).end();
+  }
 };
+
+module.exports = { addUser, getAll, getById, deleteUser };
