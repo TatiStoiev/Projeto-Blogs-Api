@@ -10,12 +10,12 @@ const createPost = async (post) => {
   );
 
   const createdPost = {
-    id: response.dataValues.id,
-    title: response.dataValues.title,
-    content: response.dataValues.content,
+    id: response.id,
+    title: response.title,
+    content: response.content,
     userId,
-    updated: response.dataValues.updated,
-    published: response.dataValues.published,
+    updated: response.updated,
+    published: response.published,
   };
 
   return createdPost;

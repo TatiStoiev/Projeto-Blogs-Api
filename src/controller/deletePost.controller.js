@@ -14,7 +14,7 @@ const deletePost = async (req, res) => {
   if (post.userId !== userId) {
     return res.status(401).json({ message: 'Unauthorized user' });
   }
-  const deletedPost = await updatePostServices.deletePost(id, userId); 
+  const deletedPost = await updatePostServices.deletePost(id); 
   if (deletedPost.status === 'SUCCESSFUL') {
     return res.status(204).send();
   }  

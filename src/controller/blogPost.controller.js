@@ -14,7 +14,7 @@ const addPost = async (req, res) => {
   if (categories === null) {
     const createdPost = await postServices
       .createPost({ title, content, categoryIds, userId: UserId });
-    return res.status(201).json({ createdPost });
+    return res.status(201).json(createdPost);
   }
   if (categories.status === 'INVALID_VALUE') {
     return res.status(mapStatusHttp(statusInvalidValue)).json(categories.data);
