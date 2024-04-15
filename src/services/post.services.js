@@ -4,22 +4,20 @@ const createPost = async (post) => {
   const { title, content, categoryIds, userId } = post;
 
   const response = await BlogPost.create({ title, content, userId });
-  console.log('response.id', response.id);
   await Promise.all(
     categoryIds.map((categoryId) => 
       PostCategory.create({ postId: response.id, categoryId })),
   );
-  console.log('response do cadastro do token', response);
+
   const createdPost = {
-    id: response.dataValues.id,
-    title: response.dataValues.title,
-    content: response.dataValues.content,
+    id: response.id,
+    title: response.title,
+    content: response.content,
     userId,
-    updated: response.dataValues.updated,
-    published: response.dataValues.published,
+    updated: response.updated,
+    published: response.published,
   };
 
-  console.log('a createdpost do service', createdPost);  
   return createdPost;
 };
 
@@ -52,7 +50,7 @@ const findById = async (id) => {
     ],
   });
   if (!post) {
-    return { status: 'USER_INVALID', data: { message: 'Post does not exist' } };
+    return { status: 'INVALID', data: { message: 'Post does not exist' } };
   }
   return post;
 };

@@ -1,8 +1,9 @@
 const { postServices, categoryServices, updatePostServices } = require('../services/index');
 const { mapStatusHttp } = require('../utils/mapStatusHttp');
 
-const statusUserInvalid = 'USER_INVALID';
+const statusInvalid = 'INVALID';
 const statusInvalidValue = 'INVALID_VALUE';
+const statusSuccessful = 'SUCCESSFUL';
 
 const addPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
@@ -13,7 +14,7 @@ const addPost = async (req, res) => {
   if (categories === null) {
     const createdPost = await postServices
       .createPost({ title, content, categoryIds, userId: UserId });
-    return res.status(201).json({ createdPost });
+    return res.status(201).json(createdPost);
   }
   if (categories.status === 'INVALID_VALUE') {
     return res.status(mapStatusHttp(statusInvalidValue)).json(categories.data);
@@ -29,8 +30,8 @@ const getById = async (req, res) => {
   const id = Number(req.params.id);
 
   const post = await postServices.findById(id);
-  if (post.status === 'USER_INVALID') {
-    return res.status(mapStatusHttp(statusUserInvalid)).json(post.data);
+  if (post.status === 'INVALID') {
+    return res.status(mapStatusHttp(statusInvalid)).json(post.data);
   }
   return res.status(200).json(post);
 };
@@ -47,14 +48,8 @@ const updatePost = async (req, res) => {
 
   const updatedPost = await updatePostServices.updatePost(id, title, content); 
   if (updatedPost.status === 'SUCCESSFUL') {
-    const status = 'SUCCESSFUL';
-    return res.status(mapStatusHttp(status)).json(updatedPost.data);
+    return res.status(mapStatusHttp(statusSuccessful)).json(updatedPost.data);
   }
 };
 
-module.exports = {
-  addPost,
-  getAll,
-  getById,
-  updatePost,
-};
+module.exports = { addPost, getAll, getById, updatePost };

@@ -1,4 +1,4 @@
-const { BlogPost, User, Category } = require('../models');
+const { BlogPost, User, Category, PostCategory } = require('../models');
 
 const updatePost = async (id, title, content) => {
   await BlogPost.update({ title, content }, { where: { id } });  
@@ -11,6 +11,21 @@ const updatePost = async (id, title, content) => {
   return { status: 'SUCCESSFUL', data: updatedPost };
 };
 
+const deletePost = async (id) => {
+  await PostCategory.destroy({ 
+    where: { postId: id },
+  });
+
+  const rowsAffected = await BlogPost.destroy({ 
+    where: { id },
+  });
+
+  if (rowsAffected) {
+    return { status: 'SUCCESSFUL', rowsAffected };
+  }
+};  
+
 module.exports = {
   updatePost,
+  deletePost,
 };
