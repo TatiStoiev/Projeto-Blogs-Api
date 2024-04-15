@@ -12,7 +12,6 @@ const updatePost = async (id, title, content) => {
 };
 
 const deletePost = async (id) => {
-
   await PostCategory.destroy({ 
     where: { postId: id },
   });
