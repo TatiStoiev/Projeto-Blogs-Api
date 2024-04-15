@@ -30,10 +30,10 @@ app.get('/categories', ValidateToken, categoryController.getAll);
 
 app.post('/post', ValidateToken, validatePost, blogPostController.addPost);
 app.get('/post', ValidateToken, blogPostController.getAll);
+app.get('/post/search', ValidateToken, postController.searchPost);
 app.get('/post/:id', ValidateToken, blogPostController.getById);
 app.put('/post/:id', ValidateToken, validateUpdatePost, blogPostController.updatePost);
 app.delete('/post/:id', ValidateToken, postController.deletePost);
-app.get('/post/search', ValidateToken, postController.searchPost);
 // ...
 
 // É importante exportar a constante `app`,

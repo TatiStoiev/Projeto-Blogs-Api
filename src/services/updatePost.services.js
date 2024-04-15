@@ -30,7 +30,7 @@ const findPostBySearch = async (searchTerm) => {
   const post = await BlogPost.findAll({ 
     where: {
       [Op.or]: [
-        { title: { [Op.like]: `%${searchTerm}%` } },
+        { title: { [Op.like]: `%${searchTerm}%` } }, // consulta na documentação 
         { content: { [Op.like]: `%${searchTerm}%` } },
       ],
     },
