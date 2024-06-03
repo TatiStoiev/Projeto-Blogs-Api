@@ -14,6 +14,7 @@ Os arquivos que implementei são:
 - App;
 
 Proposta do projeto: 
+- Stack Javascript;
 - Utilizar o ORM Sequelize; 
 - Interação com o banco de dados Mysql;
 - Usar arquitetura de software em camadas; 
